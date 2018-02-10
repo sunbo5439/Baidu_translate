@@ -36,5 +36,20 @@ def token_cn(json_path):
 token_cn('captions_train2014_formated.json')
 token_cn('captions_val2014_format.json')
 
+
+def doit(json_path):
+    raw_data = json.load(codecs.open(json_path, 'r', 'utf-8'))
+    annotations = raw_data['annotations']
+    for e in annotations:
+        caption_en = e['caption']
+        caption_cn_toked = e['caption_cn_toked']
+        e['caption_en'] = caption_en
+        e['caption'] = caption_cn_toked
+    json.dump(raw_data, codecs.open(json_path, 'w', 'utf-8'), ensure_ascii=False, indent=4)
+
+
+doit('captions_train2014_formated.json')
+doit('captions_val2014_format.json')
+
 # validate('captions_train2014_formated.json')
 # validate('captions_val2014_format.json')
